@@ -13,7 +13,7 @@
 	},
 	"vars": {
 		"BASE_URL": "https://md.choubari.com",
-		"POSTHOG_PUBLIC_KEY": "",
+		"POSTHOG_PUBLIC_KEY": "phc_kfrv4SP9BBCFRaZp3WEVhp4yGvQKzavMEjpmd83zbmom",
 		"POSTHOG_HOST": "https://eu.i.posthog.com",
 	},
 	// Rate limiting: create a namespace in CF Dashboard → Workers & Pages → Rate Limiting
