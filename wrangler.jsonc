@@ -14,12 +14,9 @@
 		"enabled": true
 	},
 	"vars": {
-		// Your deployed Worker URL (used in the User-Agent header)
-		"BASE_URL": "",
-		// Client-side PostHog key — leave empty to disable analytics
+		"BASE_URL": "https://md.choubari.com",
 		"POSTHOG_PUBLIC_KEY": "",
-		// PostHog ingest URL (e.g. https://eu.i.posthog.com or https://us.i.posthog.com)
-		"POSTHOG_HOST": ""
+		"POSTHOG_HOST": "https://eu.i.posthog.com"
 	},
 	// Rate limiting: create a namespace in CF Dashboard → Workers & Pages → Rate Limiting
 	// then replace the namespace_id below with your own
