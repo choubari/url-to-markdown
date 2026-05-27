@@ -67,7 +67,7 @@ export default {
 
 		// Track shared link opens
 		const utmSource = url.searchParams.get('utm_source');
-		if (utmSource === 'copy-markdown') {
+		if (utmSource === 'url-to-markdown') {
 			ctx.waitUntil(
 				hashIp(ip).then((id) =>
 					trackEvent(env, 'shared_link_opened', { utm_medium: url.searchParams.get('utm_medium'), target_url: rawTarget }, id),

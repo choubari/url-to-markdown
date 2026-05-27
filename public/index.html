@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>copy-markdown — Webpage to Markdown</title>
+  <title>url-to-markdown — Webpage to Markdown</title>
   <meta name="description" content="Convert any webpage to clean Markdown. Free, no account, no API key. Use as a URL prefix: md.choubari.com/https://example.com" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <main>
-    <h1>copy-markdown</h1>
+    <h1>url-to-markdown</h1>
     <p class="tagline">Paste any URL. Get clean Markdown. Free, no account needed.</p>
     <form id="form">
       <input
@@ -39,6 +39,9 @@
       localStorage.setItem('cookie_ok', '1');
       document.getElementById('cookie-banner').classList.add('hidden');
     });
+
+    // Auto-focus URL input
+    document.getElementById('url').focus();
 
     // URL form
     document.getElementById('form').addEventListener('submit', function(e) {

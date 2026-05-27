@@ -8,6 +8,11 @@
     setTimeout(function () { t.classList.remove('show'); }, 2000);
   }
 
+  // Auto-copy on load
+  navigator.clipboard.writeText(ta.value).then(function () {
+    showToast('Copied to clipboard!');
+  }).catch(function () {});
+
   var _uid = localStorage.getItem('_cm_uid');
   if (!_uid) { _uid = crypto.randomUUID(); localStorage.setItem('_cm_uid', _uid); }
 
@@ -36,7 +41,7 @@
 
   document.getElementById('share').addEventListener('click', function () {
     var base = location.origin + location.pathname;
-    var shareUrl = base + '?utm_source=copy-markdown&utm_medium=share&utm_campaign=share-button';
+    var shareUrl = base + '?utm_source=url-to-markdown&utm_medium=share&utm_campaign=share-button';
     navigator.clipboard.writeText(shareUrl).then(function () {
       showToast('Link copied!');
       ph('share_clicked', { utm_url: shareUrl });
