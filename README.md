@@ -64,7 +64,7 @@ You'll be prompted to log in on first deploy. Your Worker URL will be printed.
 npx wrangler secret put POSTHOG_API_KEY
 ```
 
-**Rate limiting** — the Worker uses Cloudflare's native Rate Limiting binding (30 req/60s per IP):
+**Rate limiting** — the Worker uses Cloudflare's native Rate Limiting binding (5 req/60s per IP):
 
 1. Go to Cloudflare Dashboard → Workers & Pages → your Worker → Rate Limiting → Create namespace
 2. Copy the namespace ID and replace `YOUR_NAMESPACE_ID` in `wrangler.jsonc`
@@ -119,7 +119,7 @@ The workflow runs `npm test` before deploying — a failing test blocks the depl
 
 - 5 MB page size
 - 8-second fetch timeout
-- 30 requests / 60 seconds per IP (configurable)
+- 5 requests / 60 seconds per IP (configurable)
 - JS-rendered pages (React, Vue, etc.) return thin content
 
 ## License
