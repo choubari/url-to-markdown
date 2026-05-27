@@ -1,0 +1,11 @@
+# Copy to .dev.vars and fill in your values for local development
+# .dev.vars is gitignored — never commit it
+
+# Your local dev URL
+BASE_URL=http://localhost:8787
+
+# PostHog ingest URL
+POSTHOG_HOST=https://eu.i.posthog.com
+
+# Server-side PostHog key (optional — leave empty to disable analytics)
+POSTHOG_API_KEY=

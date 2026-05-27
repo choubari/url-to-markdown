@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>copy-markdown — Webpage to Markdown</title>
+  <meta name="description" content="Convert any webpage to clean Markdown. Free, no account, no API key. Use as a URL prefix: md.choubari.com/https://example.com" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main>
+    <h1>copy-markdown</h1>
+    <p class="tagline">Paste any URL. Get clean Markdown. Free, no account needed.</p>
+    <form id="form">
+      <input
+        id="url"
+        type="url"
+        placeholder="https://example.com/article"
+        autocomplete="off"
+        spellcheck="false"
+        required
+      />
+      <button type="submit">Convert</button>
+    </form>
+    <p class="hint">Or use the URL directly: <code>md.choubari.com/https://example.com</code></p>
+  </main>
+
+  <div id="cookie-banner">
+    <p>This site uses analytics cookies to understand usage. <a href="/privacy">Privacy policy</a> · <a href="/cookies">Cookie policy</a></p>
+    <button id="cookie-accept">Got it</button>
+  </div>
+
+  <script>
+    // Cookie consent
+    if (localStorage.getItem('cookie_ok')) {
+      document.getElementById('cookie-banner').classList.add('hidden');
+    }
+    document.getElementById('cookie-accept').addEventListener('click', function() {
+      localStorage.setItem('cookie_ok', '1');
+      document.getElementById('cookie-banner').classList.add('hidden');
+    });
+
+    // URL form
+    document.getElementById('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var url = document.getElementById('url').value.trim();
+      if (url) window.location.href = '/' + url;
+    });
+  </script>
+</body>
+</html>

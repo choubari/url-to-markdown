@@ -1,17 +1,11 @@
 import { parseHTML } from "linkedom";
 import { Readability } from "@mozilla/readability";
 import { NodeHtmlMarkdown } from "node-html-markdown";
+import { MAX_BODY_BYTES, MAX_REDIRECTS, TIMEOUT_MS, DEFAULT_USER_AGENT } from "./constants";
 
 export type ConvertResult =
 	| { ok: true; markdown: string; fallback: boolean; title: string }
 	| { ok: false; status: number; code: string; detail?: string };
-
-const MAX_BODY_BYTES = 5 * 1024 * 1024; // 5 MB
-const MAX_REDIRECTS = 5;
-const TIMEOUT_MS = 8000;
-
-const USER_AGENT =
-	"Mozilla/5.0 (compatible; CopyMarkdown/1.0; +https://github.com/kawtar/copy-markdown)";
 
 const nhm = new NodeHtmlMarkdown({ useInlineLinks: true });
 
@@ -42,7 +36,6 @@ function extractMarkdown(html: string, url: string): { markdown: string; fallbac
 	if (article?.content) {
 		sourceHtml = article.content;
 	} else {
-		// Fallback: strip noise and use full body
 		fallback = true;
 		for (const tag of ["script", "style", "nav", "footer", "header", "noscript"]) {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,8 +49,7 @@ function extractMarkdown(html: string, url: string): { markdown: string; fallbac
 	return { markdown, fallback, title };
 }
 
-export async function convertUrl(rawTarget: string): Promise<ConvertResult> {
-	// Validate URL
+export async function convertUrl(rawTarget: string, userAgent = DEFAULT_USER_AGENT): Promise<ConvertResult> {
 	let target: URL;
 	try {
 		target = new URL(rawTarget);
@@ -68,7 +60,6 @@ export async function convertUrl(rawTarget: string): Promise<ConvertResult> {
 		return { ok: false, status: 400, code: "invalid_url" };
 	}
 
-	// Fetch with manual redirect handling
 	let currentUrl = rawTarget;
 	let hops = 0;
 	let response: Response;
@@ -79,7 +70,7 @@ export async function convertUrl(rawTarget: string): Promise<ConvertResult> {
 			fetchResponse = await fetch(currentUrl, {
 				redirect: "manual",
 				signal: AbortSignal.timeout(TIMEOUT_MS),
-				headers: { "User-Agent": USER_AGENT },
+				headers: { "User-Agent": userAgent },
 			});
 		} catch (err) {
 			const msg = err instanceof Error ? err.message : String(err);
@@ -97,7 +88,6 @@ export async function convertUrl(rawTarget: string): Promise<ConvertResult> {
 			if (!location) {
 				return { ok: false, status: 502, code: "bad_redirect" };
 			}
-			// Resolve relative redirects
 			const next = new URL(location, currentUrl);
 			if (next.protocol !== "http:" && next.protocol !== "https:") {
 				return { ok: false, status: 403, code: "blocked_url" };
@@ -115,7 +105,6 @@ export async function convertUrl(rawTarget: string): Promise<ConvertResult> {
 		break;
 	}
 
-	// Check body size
 	const contentLength = response.headers.get("Content-Length");
 	if (contentLength && parseInt(contentLength, 10) > MAX_BODY_BYTES) {
 		return { ok: false, status: 413, code: "too_large" };

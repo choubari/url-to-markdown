@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{TITLE}} — {{APP_NAME}}</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <main class="result">
+    <div class="toolbar">
+      <a href="/" class="back">← New URL</a>
+      <span class="meta">{{TITLE}} · {{CHARS}} chars</span>
+      <button id="copy">Copy</button>
+      <button id="share">Share</button>
+    </div>
+    {{FALLBACK_WARNING}}
+    <textarea id="md" readonly spellcheck="false">{{TEXTAREA_CONTENT}}</textarea>
+  </main>
+
+  <div id="toast"></div>
+  {{COOKIE_BANNER}}
+
+  <script>
+    window.__PH_KEY = {{PH_KEY}};
+    window.__PH_HOST = {{PH_HOST}};
+  </script>
+  <script src="/result.js"></script>
+</body>
+</html>

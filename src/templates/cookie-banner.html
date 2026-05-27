@@ -1,0 +1,11 @@
+<div id="cookie-banner">
+  <p>This site uses analytics cookies to understand usage. <a href="/privacy">Privacy policy</a> · <a href="/cookies">Cookie policy</a></p>
+  <button id="cookie-accept">Got it</button>
+</div>
+<script>
+  if (localStorage.getItem('cookie_ok')) document.getElementById('cookie-banner').classList.add('hidden');
+  document.getElementById('cookie-accept').addEventListener('click', function() {
+    localStorage.setItem('cookie_ok', '1');
+    document.getElementById('cookie-banner').classList.add('hidden');
+  });
+</script>
