@@ -13,8 +13,8 @@
     showToast('Copied to clipboard!');
   }).catch(function () {});
 
-  var _uid = localStorage.getItem('_cm_uid');
-  if (!_uid) { _uid = crypto.randomUUID(); localStorage.setItem('_cm_uid', _uid); }
+  var _uid = localStorage.getItem('_md_uid');
+  if (!_uid) { _uid = crypto.randomUUID(); localStorage.setItem('_md_uid', _uid); }
 
   function ph(event, props) {
     var key = window.__PH_KEY;
