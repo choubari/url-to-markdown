@@ -14,13 +14,14 @@ const ERROR_MESSAGES: Record<string, string> = {
 	fetch_error: 'Could not reach the page',
 };
 
-function htmlHeaders(): HeadersInit {
+function htmlHeaders(phHost?: string): HeadersInit {
+	const connectSrc = phHost ? `'self' ${phHost}` : "'self'";
 	return {
 		'Content-Type': 'text/html; charset=utf-8',
 		'X-Content-Type-Options': 'nosniff',
 		'X-Frame-Options': 'SAMEORIGIN',
 		'Referrer-Policy': 'strict-origin-when-cross-origin',
-		'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'",
+		'Content-Security-Policy': `default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src ${connectSrc}`,
 	};
 }
 
@@ -48,7 +49,7 @@ export default {
 			}
 			return new Response(errorPage('Not a valid URL — must start with http:// or https://'), {
 				status: 400,
-				headers: htmlHeaders(),
+				headers: htmlHeaders(env.POSTHOG_HOST),
 			});
 		}
 
@@ -61,7 +62,7 @@ export default {
 			}
 			return new Response(errorPage('Too many requests — please wait a moment and try again.'), {
 				status: 429,
-				headers: htmlHeaders(),
+				headers: htmlHeaders(env.POSTHOG_HOST),
 			});
 		}
 
@@ -96,7 +97,7 @@ export default {
 			}
 			return new Response(errorPage(message), {
 				status: result.status,
-				headers: htmlHeaders(),
+				headers: htmlHeaders(env.POSTHOG_HOST),
 			});
 		}
 
@@ -126,7 +127,7 @@ export default {
 		}
 
 		return new Response(resultPage(markdown, title, fallback, env.POSTHOG_PUBLIC_KEY, env.POSTHOG_HOST), {
-			headers: htmlHeaders(),
+			headers: htmlHeaders(env.POSTHOG_HOST),
 		});
 	},
 } satisfies ExportedHandler<Env>;
