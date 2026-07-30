@@ -4,6 +4,8 @@ Convert any webpage to clean Markdown. Free, no account, no API key.
 
 **Live demo:** [md.choubari.com](https://md.choubari.com)
 
+![Demo](assets/demo.gif)
+
 ## Usage
 
 Paste a URL into the web UI, or use the URL-prefix pattern directly:
